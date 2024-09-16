@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            overflow: hidden;
+            background-color: #111; /* Optional, if you want a fallback background color */
+        }
+
+        .page-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111 url("https://images.unsplash.com/photo-1631378961385-21bee7eb41ad?q=80&w=1200") no-repeat top center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .page-wrapper {
+            text-align: center;
+            color: #404040;
+            z-index: 2;
+        }
+
+        .interaction {
+            background-color: #b8b9b963;
+            border-radius: 1em;
+        }
+
+        #main, #notSupported {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-bg"></div>
+
+    <div class="page-wrapper"> 
+        <h1>Flash your CYD with ESP Web Tools</h1>
+    </div>
+
+    <div id="main" style="display: none;">
+        <br>
+        <script
+            type="module"
+            src="https://unpkg.com/esp-web-tools@10.0.1/dist/web/install-button.js?module">
+        </script>
+        
+        <div class="interaction">
+            <esp-web-install-button id="installButton" manifest="webflash/manifest.json"></esp-web-install-button>
+            <br>
+            <span>NOTE: Make sure to close anything using your devices com port (e.g. Serial monitor)</span>
+        </div>
+    </div>
+    
+    <div id="notSupported" style="display: none;">
+        Your browser does not support the Web Serial API. Try Chrome
+    </div>
+
+    <script>
+        if(navigator.serial){
+            document.getElementById("notSupported").style.display = 'none';
+            document.getElementById("main").style.display = 'block';
+        } else {
+            document.getElementById("notSupported").style.display = 'block';
+            document.getElementById("main").style.display = 'none';
+        }
+    </script>
+</body>
+</html>
